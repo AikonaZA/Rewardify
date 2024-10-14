@@ -3,6 +3,7 @@ using Rewardify.Application.Interfaces;
 using Rewardify.Application.Services;
 using Rewardify.Core.Interfaces;
 using Rewardify.Infrastructure.Data;
+using Rewardify.ServiceDefaults;
 
 var builder = WebApplication.CreateBuilder(args);
 
