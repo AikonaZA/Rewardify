@@ -1,9 +1,12 @@
+using Microsoft.EntityFrameworkCore;
 using Rewardify.API.Endpoints;
 using Rewardify.Application.Interfaces;
 using Rewardify.Application.Services;
 using Rewardify.Core.Interfaces;
 using Rewardify.Infrastructure.Data;
+using Rewardify.Infrastructure.Repositories;
 using Rewardify.ServiceDefaults;
+using static Rewardify.Infrastructure.Data.RewardifyDbContext;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +18,10 @@ builder.Services.AddSwaggerGen();
 
 // Register the connection string
 string connectionString = builder.Configuration.GetConnectionString("RewardifyDatabase");
+
+// Add DbContext for SQLite with code-first approach
+builder.Services.AddDbContext<RewardifyDbContext>(options =>
+    options.UseSqlite(connectionString));
 
 // Register LoyaltyService and required repositories
 builder.Services.AddScoped<ILoyaltyService, LoyaltyService>();
@@ -34,26 +41,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
+// Apply database creation
+using (var scope = app.Services.CreateScope())
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
-
+    var dbContext = scope.ServiceProvider.GetRequiredService<RewardifyDbContext>();
+    RewardifyDbInitializer.Initialize(dbContext);
+}
 // Map Rewardify Endpoints
 RewardifyEndpoints.Map(app);
 

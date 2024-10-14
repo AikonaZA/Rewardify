@@ -1,3 +1,4 @@
+using Rewardify.ServiceDefaults;
 using Rewardify.Web;
 using Rewardify.Web.Components;
 

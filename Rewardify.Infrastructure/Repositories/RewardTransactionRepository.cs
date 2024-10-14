@@ -3,7 +3,7 @@ using Microsoft.Data.Sqlite;
 using Rewardify.Core.Entities;
 using Rewardify.Core.Interfaces;
 
-namespace Rewardify.Infrastructure.Data;
+namespace Rewardify.Infrastructure.Repositories;
 
 public class RewardTransactionRepository(string connectionString) : IRewardTransactionRepository
 {
