@@ -49,5 +49,5 @@ public class LoyaltyService(ICustomerRepository customerRepository, IRewardTrans
         await customerRepository.UpdateCustomerAsync(customer);
     }
 
-    public async Task<Customer> GetCustomerPointsBalanceAsync(int customerId) => await customerRepository.GetCustomerByIdAsync(customerId);
+    public async Task<Customer?> GetCustomerPointsBalanceAsync(int customerId) => await customerRepository.GetCustomerByIdAsync(customerId);
 }

@@ -8,5 +8,5 @@ public interface ILoyaltyService
 
     Task RedeemPointsAsync(int customerId, int points);
 
-    Task<Customer> GetCustomerPointsBalanceAsync(int customerId);
+    Task<Customer?> GetCustomerPointsBalanceAsync(int customerId);
 }

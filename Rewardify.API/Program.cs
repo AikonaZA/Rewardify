@@ -17,7 +17,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Register the connection string
-string connectionString = builder.Configuration.GetConnectionString("RewardifyDatabase");
+string connectionString = builder.Configuration.GetConnectionString("RewardifyDatabase")!;
 
 // Add DbContext for SQLite with code-first approach
 builder.Services.AddDbContext<RewardifyDbContext>(options =>

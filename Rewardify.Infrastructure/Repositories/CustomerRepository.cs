@@ -7,7 +7,7 @@ namespace Rewardify.Infrastructure.Repositories;
 
 public class CustomerRepository(string connectionString) : ICustomerRepository
 {
-    public async Task<Customer> GetCustomerByIdAsync(int customerId)
+    public async Task<Customer?> GetCustomerByIdAsync(int customerId)
     {
         using var connection = new SqliteConnection(connectionString);
         var sql = "SELECT * FROM Customers WHERE CustomerId = @CustomerId";
